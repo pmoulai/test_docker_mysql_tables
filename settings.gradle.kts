@@ -1,0 +1,1 @@
+rootProject.name = "test_docker_mysql_tables"

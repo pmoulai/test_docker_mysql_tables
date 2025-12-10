@@ -1,0 +1,30 @@
+services:
+  mysql1:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: bob
+      MYSQL_PASSWORD: bob
+    ports:
+      - "3307:3306"
+    volumes:
+      - type: bind
+        source: ./db
+        target: /var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    depends_on:
+      - mysql1
+    environment:
+      PMA_HOST: mysql1
+    ports:
+      - 81:80
+
+
+volumes:
+  db:
+    external: true
